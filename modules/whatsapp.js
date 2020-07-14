@@ -46,8 +46,8 @@ function WHATS_API(USER_ID) {
 var SANITIZE_ACK = function(instanceID,data){
   return JSON.stringify({
       ack: [{
-        id: data.id._serialized,
-        chatId: data.id.remote,
+        id: data.id,
+        chatId: data.from,
         status: (data.ack == 1 ? 'sent' : (data.ack == 2 ? 'delivered' : 'viewed'))
       }],
       instanceId: instanceID

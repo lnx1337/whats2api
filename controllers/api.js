@@ -121,19 +121,19 @@ function sendMessage(instance){
 				BODY_CHECK(BODY).then(function(processData){
 					if(processData.status){
 						WA_CLIENT.CONNECTION.sendText(processData.chatId, BODY['body']);
-						self.json({status:true});
+						self.json({sent:true});
 					} else {
-						self.json({status:false, err: "It is mandatory to inform the parameter 'chatId' or 'phone'"});
+						self.json({sent: false, err: "It is mandatory to inform the parameter 'chatId' or 'phone'"});
 					}
 				});
 			} else {
-				self.json({status:false, err: "Paramether body is mandatory"});
+				self.json({sent:false, err: "Paramether body is mandatory"});
 			}
 		} else {
-			self.json({status:false, err: "Wrong token authentication"});
+			self.json({sent:false, err: "Wrong token authentication"});
 		}
 	} else {
-		self.json({status:false, err: "Your company is not set yet"});
+		self.json({sent:false, err: "Your company is not set yet"});
 	}
 }
 
