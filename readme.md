@@ -47,7 +47,7 @@ You can built your own image with modifications, clone this repo to your preffer
 ```
 This above command will create an container image of whats2API and prepare for run, when you feel good, just run:
 ```bash
-> docker run --name instance1 -p 8001:8000 joaomirandas/whats2api
+> docker run -d --name instance1 -p 8001:8000 joaomirandas/whats2api
 ```
 
 ### Documentation
