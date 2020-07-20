@@ -46,6 +46,7 @@ exports.install = function() {
 	*/
 	ROUTE('/{instance}/dialogs',				dialogs,			[]);
 	ROUTE('/{instance}/getChatById',			getChatById,		['post',default_timeout]);
+	ROUTE('/{instance}/getAllMessagesInChat',   getAllMessagesInChat, ['post',default_timeout]);
 
 	/*
 	* API ROUTES - Instance Routes
@@ -386,6 +387,33 @@ function getChatById(instance){
 			BODY_CHECK(BODY).then(function(processData){
 				if(processData.status){
 					WA_CLIENT.CONNECTION.getChatById(processData.chatId).then(function(Chat){
+						self.json({status:true, data: Chat});
+					});
+				} else {
+					self.json({status:false, err: "It is mandatory to inform the parameter 'chatId' or 'phone'"});
+				}
+			});
+		} else {
+			self.json({status:false, err: "Wrong token authentication"});
+		}
+	} else {
+		self.json({status:false, err: "Your company is not set yet"});
+	}
+}
+
+/*
+* That route allow you to get all messages in chat
+* tested on version 0.0.8
+* performance: Operational
+*/
+function getAllMessagesInChat(instance){
+	var self = this;
+	var BODY = self.body;
+	if(WA_CLIENT){
+		if(WA_CLIENT.TOKEN == self.query['token']){
+			BODY_CHECK(BODY).then(function(processData){
+				if(processData.status){
+					WA_CLIENT.CONNECTION.getAllMessagesInChat(processData.chatId, true, true).then(function(Chat){
 						self.json({status:true, data: Chat});
 					});
 				} else {
